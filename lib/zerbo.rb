@@ -17,7 +17,9 @@ class Zerbo
     else
       require 'serialport'
       @device = SerialPort.new(device, 38400)
-      @device.read_timeout = 0
+      unless RUBY_PLATFORM =~ /darwin/
+        @device.read_timeout = 0
+      end
     end
     @callbacks = []
   end
