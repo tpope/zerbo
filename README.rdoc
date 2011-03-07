@@ -1,0 +1,33 @@
+= Zerbo
+
+Interface with the Zeo Personal Sleep Coach over USB with Ruby.
+
+== Prerequisites
+
+* Depends on ruby-serialport, which is currently limited to Ruby 1.8.
+
+* Requires constructing your own USB cable.  See
+  http://zeorawdata.sourceforge.net/starting.html for details.  You may need to
+  install the drivers from http://www.ftdichip.com/Drivers/VCP.htm as well.
+
+* You may have to do some source diving, as the documentation is basically
+  limited to this file (don't worry, the source is pretty short, too).
+
+== Usage
+
+  zeo = Zerbo.connect('/dev/zeo')
+
+On OS X, the device you want can probably be found in
+<tt>/dev/tty.usbserial*</tt>.  On Linux, look at <tt>/dev/ttyUSB*</tt>.  I
+can't speak for Windows, but the Python library works there, so presumably
+Zerbo can be made to work as well.
+
+  zeo.on_sleep_stage do |stage|
+    puts stage
+  end
+
+  zeo.on_event do |event|
+    p event
+  end
+
+  zeo.run
