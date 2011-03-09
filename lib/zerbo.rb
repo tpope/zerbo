@@ -124,6 +124,11 @@ class Zerbo
       end
     end
 
+    def name
+      self.class.name.split('::').last
+    end
+    alias to_s name
+
     def inspect
       format_inspect((to_i || data).inspect)
     end
