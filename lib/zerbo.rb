@@ -17,9 +17,6 @@ class Zerbo
     else
       require 'serialport'
       @device = SerialPort.new(device, 38400)
-      unless RUBY_PLATFORM =~ /darwin/
-        @device.read_timeout = 0
-      end
     end
     @callbacks = []
   end
@@ -41,8 +38,10 @@ class Zerbo
   end
   alias next next_packet
 
-  def read(*args)
-    device.read(*args)
+  def read(length)
+    data = device.read(length)
+    raise Error, "Read timeout" unless data.to_s.length == length
+    data
   end
   protected :read
 
